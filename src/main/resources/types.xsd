@@ -1,0 +1,106 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+		xmlns:types="http://jun.com/schemas/types"
+        elementFormDefault="qualified"
+        targetNamespace="http://jun.com/schemas/types">
+
+       	<xs:complexType name="UserResponse">
+       		<xs:sequence>
+       			<xs:element name="UserType" type="types:userType" minOccurs="1"/>
+       			<xs:element name="customer" type="types:customer" minOccurs="0"/>
+       			<xs:element name="admin" type="types:admin" minOccurs="0"/>
+       			<xs:element name="Status" type="xs:integer" minOccurs="1"/>
+       		</xs:sequence>
+       	</xs:complexType>
+       	
+       	<xs:simpleType name="userType">
+       		<xs:restriction base="xs:string">
+       			<xs:enumeration value="admin"/>
+       			<xs:enumeration value="customer"/>
+       		</xs:restriction>
+       	</xs:simpleType>
+       	
+       	<xs:complexType name="user">
+       		<xs:sequence>
+       			<xs:element name="userName" type="xs:string"/>
+       			<xs:element name="password" type="xs:string"/>
+       			<xs:element name="enabled" type="xs:unsignedShort"/>
+       		</xs:sequence>
+       	</xs:complexType>
+       	
+       	<xs:complexType name="authority">
+       		<xs:sequence>
+       			<xs:element name="userName" type="xs:string"/>
+       			<xs:element name="authority" type="xs:string"/>
+       		</xs:sequence>
+       	</xs:complexType>
+       	
+		<xs:complexType name="customer">
+	        <xs:sequence>
+	            <xs:element name="userName" type="xs:string"/>
+	            <xs:element name="firstName" type="xs:string"/>
+	            <xs:element name="middleName" type="xs:string"/>
+	            <xs:element name="lastName" type="xs:string"/>
+	            <xs:element name="homePhone" type="xs:string"/>
+	            <xs:element name="mobilePhone" type="xs:string"/>
+	            <xs:element name="cDateTime" type="xs:dateTime"/>
+	            <xs:element name="uDateTime" type="xs:dateTime"/>
+	        </xs:sequence>
+	    </xs:complexType>
+       	
+		<xs:complexType name="admin">
+	        <xs:sequence>
+	            <xs:element name="userName" type="xs:string"/>
+	            <xs:element name="firstName" type="xs:string"/>
+	            <xs:element name="middleName" type="xs:string"/>
+	            <xs:element name="lastName" type="xs:string"/>
+	            <xs:element name="cDateTime" type="xs:date"/>
+	            <xs:element name="uDateTime" type="xs:date"/>
+	        </xs:sequence>
+	    </xs:complexType>
+	    
+	    <xs:complexType name="category">
+       		<xs:sequence>
+       			<xs:element name="id" type="xs:long"/>
+       			<xs:element name="userName" type="xs:string"/>
+       			<xs:element name="title" type="xs:string"/>
+       			<xs:element name="cDateTime" type="xs:date"/>
+       			<xs:element name="delFlag" type="xs:unsignedShort"/>
+       		</xs:sequence>
+       	</xs:complexType>
+       	
+       	<xs:complexType name="bulletin">
+       		<xs:sequence>
+       			<xs:element name="id" type="xs:long"/>
+       			<xs:element name="categoryId" type="xs:long"/>
+       			<xs:element name="userName" type="xs:string"/>
+       			<xs:element name="title" type="xs:string"/>
+       			<xs:element name="content" type="xs:string"/>
+       			<xs:element name="cDateTime" type="xs:date"/>
+       			<xs:element name="uDateTime" type="xs:date"/>
+       			<xs:element name="delFlag" type="xs:unsignedShort"/>
+       		</xs:sequence>
+       	</xs:complexType>
+       	
+       	<xs:complexType name="file">
+       		<xs:sequence>
+       			<xs:element name="id" type="xs:long"/>
+       			<xs:element name="bulletinId" type="xs:long"/>
+       			<xs:element name="userName" type="xs:string"/>
+       			<xs:element name="filepath" type="xs:string"/>
+       			<xs:element name="filename" type="xs:string"/>
+       			<xs:element name="fileext" type="xs:string"/>
+       			<xs:element name="filesize" type="xs:long"/>
+       		</xs:sequence>
+       	</xs:complexType>
+       	
+       	<xs:complexType name="comment">
+       		<xs:sequence>
+       			<xs:element name="id" type="xs:long"/>
+       			<xs:element name="userName" type="xs:string"/>
+       			<xs:element name="bulletinId" type="xs:long"/>
+       			<xs:element name="comment" type="xs:string"/>
+       			<xs:element name="cDateTime" type="xs:date"/>
+       			<xs:element name="uDateTime" type="xs:date"/>
+       		</xs:sequence>
+       	</xs:complexType>       	
+</xs:schema>
