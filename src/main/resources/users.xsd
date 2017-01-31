@@ -2,15 +2,15 @@
         elementFormDefault="qualified"
         targetNamespace="http://jun.com/schemas/users"
         xmlns:types="http://jun.com/schemas/types">
-        <xs:import namespace="http://jun.com/schemas/types" schemaLocation="types.xsd"></xs:import>
-        <xs:element name="GetUserRq">
+        <xs:import namespace="http://jun.com/schemas/types" schemaLocation="types.xsd"/>
+        <xs:element name="GetUserRequest">
         	<xs:complexType>
         		<xs:sequence>
         			<xs:element name="UserName" type="xs:string"/>
         		</xs:sequence>
         	</xs:complexType>
         </xs:element>
-        <xs:element name="GetUserRs">
+        <xs:element name="GetUserResponse">
         	<xs:complexType>
         		<xs:sequence>
 					<xs:element name="UserType" type="types:userType" minOccurs="1"/>
@@ -20,7 +20,24 @@
         		</xs:sequence>
         	</xs:complexType>
         </xs:element>
-        <xs:element name="AddUserRq">
+        <xs:element name="AddUserRequest">
+        	<xs:complexType>
+        		<xs:sequence>
+        			<xs:element name="UserType" type="types:userType" minOccurs="1"/>
+        			<xs:element name="user" type="types:user" minOccurs="1"/>
+        			<xs:element name="customer" type="types:customer" minOccurs="0"/>
+	       			<xs:element name="admin" type="types:admin" minOccurs="0"/>
+        		</xs:sequence>
+        	</xs:complexType>
+        </xs:element>
+        <xs:element name="AddUserResponse">
+        	<xs:complexType>
+        		<xs:sequence>
+        			<xs:element name="Status" type="xs:integer" minOccurs="1"/>
+        		</xs:sequence>
+        	</xs:complexType>
+        </xs:element>
+        <xs:element name="UpdateUserRequest">
         	<xs:complexType>
         		<xs:sequence>
         			<xs:element name="UserType" type="types:userType" minOccurs="1"/>
@@ -29,16 +46,14 @@
         		</xs:sequence>
         	</xs:complexType>
         </xs:element>
-        <xs:element name="UpdateUserRq">
+        <xs:element name="UpdateUserResponse">
         	<xs:complexType>
         		<xs:sequence>
-        			<xs:element name="UserType" type="types:userType" minOccurs="1"/>
-        			<xs:element name="customer" type="types:customer" minOccurs="0"/>
-	       			<xs:element name="admin" type="types:admin" minOccurs="0"/>
+        			<xs:element name="Status" type="xs:integer" minOccurs="1"/>
         		</xs:sequence>
         	</xs:complexType>
         </xs:element>
-        <xs:element name="DeleteUserRq">
+        <xs:element name="DeleteUserRequest">
         	<xs:complexType>
         		<xs:sequence>
         			<xs:element name="UserType" type="types:userType" minOccurs="1"/>
@@ -46,7 +61,7 @@
         		</xs:sequence>
         	</xs:complexType>
         </xs:element>
-        <xs:element name="StausRs">
+        <xs:element name="DeleteUserResponse">
         	<xs:complexType>
         		<xs:sequence>
         			<xs:element name="Status" type="xs:integer" minOccurs="1"/>

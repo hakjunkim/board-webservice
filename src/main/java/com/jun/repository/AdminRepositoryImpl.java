@@ -27,16 +27,17 @@ public class AdminRepositoryImpl {
 		
 		List<Admin> admins = jdbcTemplate.query(
 				"SELECT * FROM admins WHERE username = ?",
+				new Object[]{userName},
 					new RowMapper<Admin>() {
 						public Admin mapRow(ResultSet rs, int rowNum) throws SQLException {
 							Admin a = new Admin(); 
 							a.setUserName(rs.getString("username"));
-							a.setFirstName(rs.getString("firstname"));
-							a.setMiddleName(rs.getString("middlename"));
-							a.setLastName(rs.getString("lastname"));
+							a.setFirstName(rs.getString("first_name"));
+							a.setMiddleName(rs.getString("middle_name"));
+							a.setLastName(rs.getString("last_name"));
 							try {
-								a.setCDateTime(DatatypeFactory.newInstance().newXMLGregorianCalendar(rs.getString("cdatetime")));
-								a.setUDateTime(DatatypeFactory.newInstance().newXMLGregorianCalendar(rs.getString("udatetime")));
+								a.setCDateTime(DatatypeFactory.newInstance().newXMLGregorianCalendar(rs.getString("c_datetime")));
+								a.setUDateTime(DatatypeFactory.newInstance().newXMLGregorianCalendar(rs.getString("u_datetime")));
 							} catch (DatatypeConfigurationException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -46,12 +47,13 @@ public class AdminRepositoryImpl {
 					}
 				);
 		
-		if (admins.size() > 1){
-			//FIXME Throw exception. userName should be unique. 
+		if (admins.size() > 1 || admins.size() == 0){
+			//FIXME Throw exception. userName should be unique.
+			admin = null;
 		}
-		
-		admin = admins.get(0);
-		
+		else{
+			admin = admins.get(0);
+		}
 		
         return admin;
 	}
@@ -60,7 +62,7 @@ public class AdminRepositoryImpl {
 		
 		String sql = "INSERT INTO admins "+
 				"(username, first_name, middle_name, last_name, c_datetime, u_datetime)" +
-				"VALUES (?,?,?,?, new Date(), new Date())";
+				"VALUES (?,?,?,?, NOW(), NOW())";
 		
 		Object[] args = new Object[]{ admin.getUserName(),
 										admin.getFirstName(),
@@ -78,7 +80,7 @@ public class AdminRepositoryImpl {
 		String sql = "UPDATE admins " +
 					"SET username = ?, " + 
 					"first_name = ?, middle_name = ?, last_name = ?, " + 
-					"home_phone = ?, mobile_phone = ?, u_datetime = new Date()" + 
+					"home_phone = ?, mobile_phone = ?, u_datetime = NOW()" + 
 					"WHERE username = ? ";
 		
 		Object[] args = new Object[]{ admin.getUserName(),

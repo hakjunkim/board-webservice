@@ -33,14 +33,14 @@ public class CustomerRepositoryImpl {
 						public Customer mapRow(ResultSet rs, int rowNum) throws SQLException {
 							Customer c = new Customer(); 
 							c.setUserName(rs.getString("username"));
-							c.setFirstName(rs.getString("firstname"));
-							c.setMiddleName(rs.getString("middlename"));
-							c.setLastName(rs.getString("lastname"));
-							c.setHomePhone(rs.getString("homephone"));
-							c.setMobilePhone(rs.getString("mobilephone"));
+							c.setFirstName(rs.getString("first_name"));
+							c.setMiddleName(rs.getString("middle_name"));
+							c.setLastName(rs.getString("last_name"));
+							c.setHomePhone(rs.getString("homep_hone"));
+							c.setMobilePhone(rs.getString("mobile_phone"));
 							try {
-								c.setCDateTime(DatatypeFactory.newInstance().newXMLGregorianCalendar(rs.getString("cdatetime")));
-								c.setUDateTime(DatatypeFactory.newInstance().newXMLGregorianCalendar(rs.getString("udatetime")));
+								c.setCDateTime(DatatypeFactory.newInstance().newXMLGregorianCalendar(rs.getString("c_datetime")));
+								c.setUDateTime(DatatypeFactory.newInstance().newXMLGregorianCalendar(rs.getString("u_datetime")));
 							} catch (DatatypeConfigurationException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -50,11 +50,13 @@ public class CustomerRepositoryImpl {
 					}
 				);
 		
-		if (customers.size() > 1){
-			//FIXME Throw exception. userName should be unique. 
+		if (customers.size() > 1 || customers.size() == 0){
+			//FIXME Throw exception. userName should be unique.
+			customer = null;
 		}
-		
-		customer = customers.get(0);
+		else{
+			customer = customers.get(0);
+		}
 		
         return customer;
 	}
@@ -63,7 +65,7 @@ public class CustomerRepositoryImpl {
 		
 		String sql = "INSERT INTO customers "+
 				"(username, first_name, middle_name, last_name, home_phone, mobile_phone, c_datetime, u_datetime)" +
-				"VALUES (?,?,?,?,?,?,new Date(), new Date())";
+				"VALUES (?,?,?,?,?,?,NOW(), NOW())";
 		
 		Object[] args = new Object[]{ customer.getUserName(),
 									  customer.getFirstName(),
@@ -83,7 +85,7 @@ public class CustomerRepositoryImpl {
 		String sql = "UPDATE customers " +
 					"SET username = ?, " + 
 					"first_name = ?, middle_name = ?, last_name = ?, " + 
-					"home_phone = ?, mobile_phone = ?, u_datetime = new Date()" + 
+					"home_phone = ?, mobile_phone = ?, u_datetime = NOW()" + 
 					"WHERE username = ? ";
 		
 		Object[] args = new Object[]{ customer.getUserName(),

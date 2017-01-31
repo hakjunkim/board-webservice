@@ -25,6 +25,7 @@ public class UserRepositoryImpl {
 		
 		List<User> users = jdbcTemplate.query(
 				"SELECT * FROM users WHERE username = ?",
+				new Object[]{userName},
 					new RowMapper<User>() {
 						public User mapRow(ResultSet rs, int rowNum) throws SQLException {
 							User u = new User(); 
@@ -36,12 +37,14 @@ public class UserRepositoryImpl {
 					}
 				);
 		
-		if (users.size() > 1){
-			//FIXME Throw exception. userName should be unique. 
-		}
-		
-		user = users.get(0);
+		if (users.size() > 1 || users.size() == 0){
+			//FIXME Throw exception. userName should be unique.
 			
+			user = null;
+		}
+		else{
+			user = users.get(0);
+		}
 		
         return user;
 	}
@@ -80,7 +83,7 @@ public class UserRepositoryImpl {
 	}
 	
 	
-	public int deleteCustomer(String userName) throws DataAccessException{
+	public int deleteUser(String userName) throws DataAccessException{
 		
 		String sql = "DELETE FROM users " +
 					"WHERE username = ? ";
